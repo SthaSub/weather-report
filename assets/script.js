@@ -128,7 +128,7 @@ $(document).ready(function () {
                 });
                 $.ajax(
                     {
-                        url: "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey, method: "GET"
+                        url: "https://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey, method: "GET"
                     }).then(function (res) {
                         uvIndex = res.value;
                         todaysWeather.html(""); //clearing today's weather page for next information to be displayed
