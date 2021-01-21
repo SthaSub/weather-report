@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assests/style.css" />
+    <title>Weather Report</title>
+  </head>
+  <body>
+    <header class="jumbotron">
+      <div class="title">weather report</div>
+      <div class="description">weather report dashboard by city</div>
+    </header>
+    <main class="container">
+      <div class="row">
+        <div class="col-sm">
+          <div class="searchTitle">search city here</div>
+        </div>
+      </div>
+      <div class="row" id="secondRow">
+        <div class="col-lg">
+          <div class="card">
+            <div class="card-header" id="currentCity"></div>
+            <div class="card-body" id="currentWeather">
+              <strong>Today's Weather</strong>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg">
+          <div class="card">
+            <div class="card-header" id="history">History city name</div>
+            <div class="card-body" id="historyCity">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" id="thirdRow">
+        <div class="col-lg">
+          <div class="card">
+            <div class="card-body" id="fiveDaysInfo">
+              <strong>5 Days Weather</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="card">
+        <div class="card-body">
+          <strong>Copyright &copy;</strong>
+        </div>
+      </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./assests/script.js"></script>
+  </body>
+</html>
