@@ -26,5 +26,19 @@ $(document).ready(function () {
         searchCity();
         historyClick();
     }
-    
+
+    function getDataFromLocalStorage(args, city) {
+        if (args == "searchClick") {
+            $("#historyCity").append($("<div class=\"row\"></div>").text(city));
+        } else {
+            for (var i = 0; i < localStorage.length; i++) {
+                var value = localStorage.getItem(localStorage.key(i)); // gets localStorage value by key
+                if (value != "") {
+                    var historyRow = $("<div class=\"row\"></div>");
+                    historyRow.text(value);
+                    clickOnhistory.append(historyRow);
+                }
+            }
+        }
+    }
 });
