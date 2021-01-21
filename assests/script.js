@@ -41,4 +41,42 @@ $(document).ready(function () {
             }
         }
     }
+
+    function searchCity() {
+        btnSubmit.click(function (event) {
+            event.stopPropagation();
+            var checkContain = false;
+            cityName = inputCity.val();
+            var forcastWeatherQueryURL;
+            if (cityName != "") {
+                forcastWeatherQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&units=metric&appid=" + apiKey;
+                for (var i = 0; i < localStorage.length; i++) {
+                    var value = localStorage.getItem(localStorage.key(i));
+                    if (value.toUpperCase() == cityName.toUpperCase()) {
+                        alert("Already present in history just click it to get info");
+                        console.log("Already present");
+                        checkContain = true;
+                    }
+                }
+                if (!checkContain || localStorage.length === 0) {
+                    inputCity.val("");
+                    currentCity.text(cityName);
+                    if (Object.keys(localStorage).length === 0) {
+                        counter = 0;
+                        localStorage.setItem(counter, cityName);
+                    } else {
+                        counter = Object.keys(localStorage).reduce(function (x, y) {
+                            return Math.max(x, y);
+                        });
+                        counter++;
+                        localStorage.setItem(counter, cityName);
+                    }
+                    getDataFromLocalStorage("searchClick", cityName);
+                    forecastAndTodayWeather(forcastWeatherQueryURL);
+                }
+            } else
+                alert("please enter city name to make search");
+        });
+    }
+
 });
