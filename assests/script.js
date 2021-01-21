@@ -146,7 +146,7 @@ $(document).ready(function () {
             .append("<div>" + "<strong> Humidity: </strong>" + response.main.humidity + "% </div>")
             .append("<div>" + "<strong> Wind Speed: </strong>" + response.wind.speed + "MPH </div>");
         if (option == "fiveDays") {
-            row.attr("id", "fiveDays"); 0
+            row.attr("id", "fiveDays");
             row.addClass("row");
             row.append(colDiv);
             fiveDaysInfo.append(row);
