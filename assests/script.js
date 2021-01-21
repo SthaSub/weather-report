@@ -33,6 +33,10 @@ $(document).ready(function () {
      */
     function getInitialDisplayFromStorage(){
         var intialvalue = localStorage.getItem(localStorage.key(0));
+        if(intialvalue == null){
+            localStorage.setItem("0","Adelaide"); // if no data present in the localstorage then it sets default value there
+            intialvalue = "Adelaide"; //default city
+        }
         currentCity.text(intialvalue);
         var urlIntial = "https://api.openweathermap.org/data/2.5/forecast?q=" + intialvalue + "&units=metric&appid=" + apiKey;
         forecastAndTodayWeather(urlIntial);
