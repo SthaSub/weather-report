@@ -19,4 +19,12 @@ $(document).ready(function () {
     btnSubmit.append("<i class=\"fas fa-search\" title=\"click for search\"></i>");
     form.append(inputCity).append(btnSubmit);
     $(".container .row .col-sm").append(form); // appending from to container
+
+    init();
+    function init() {
+        getDataFromLocalStorage();
+        searchCity();
+        historyClick();
+    }
+    
 });
