@@ -79,4 +79,14 @@ $(document).ready(function () {
         });
     }
 
+    function historyClick() {
+        clickOnhistory.on("click", "div.row", function (event) {
+            var getVal = $(event.target).text();
+            currentCity.text(getVal);
+            var historyQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + getVal + "&units=metric&appid=" + apiKey;
+            forecastAndTodayWeather(historyQueryURL);
+        });
+    
+    }
+
 });
