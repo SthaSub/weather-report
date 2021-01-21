@@ -9,11 +9,11 @@ $(document).ready(function () {
     var longitude = 0;
     var latitude = 0;
     var row = $("<div>");
-    var fiveDaysInfo = $("#fiveDaysInfo"); 
+    var fiveDaysInfo = $("#fiveDaysInfo");
     var currentIcon = "http://openweathermap.org/img/wn/"; // url for getting icon of weather
     var todaysWeather = $("#currentWeather");
     var form = $("<form>");
-    var inputCity = $("<input type=\"text\">"); 
+    var inputCity = $("<input type=\"text\">");
     inputCity.attr("placeholder", "enter city name");
     var btnSubmit = $("<Button type=\"button\">");
     btnSubmit.append("<i class=\"fas fa-search\" title=\"click for search\"></i>");
@@ -86,7 +86,32 @@ $(document).ready(function () {
             var historyQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + getVal + "&units=metric&appid=" + apiKey;
             forecastAndTodayWeather(historyQueryURL);
         });
-    
     }
+
+    function forecastAndTodayWeather(QueryURL) {
+        $.ajax(
+            {
+                url: QueryURL, method: "GET"
+            }).then(function (response) {
+                longitude = response.city.coord.lon;
+                latitude = response.city.coord.lat;
+                var weatherArray = response.list.filter(function (args) {
+                    return args.dt_txt.split(" ")[1] == "12:00:00";
+                });
+                $.ajax(
+                    {
+                        url: "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey, method: "GET"
+                    }).then(function (res) {
+                        uvIndex = res.value;
+                        todaysWeather.html(""); //clearing today's weather page for next information to be displayed
+                        displayWeather(weatherArray[0], "today");
+                    });
+                row.html(""); //clearing 5 days row page for next information to be displayed
+                for (var key in weatherArray) {
+                    displayWeather(weatherArray[key], "fiveDays");
+                }
+            });
+    }
+
 
 });
