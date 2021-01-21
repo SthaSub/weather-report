@@ -113,5 +113,33 @@ $(document).ready(function () {
             });
     }
 
+    function displayWeather(response, option) {
+        var iconDiv = $("<div>");
+        var colDiv = $("<div>");
+        colDiv.addClass("col-xs-2");
+        var imga = $("<img id=\"weIcon\">");
+        var dat = new Date(response.dt * 1000);
+        var fullDate = $("<div>");
+        fullDate.append($("<strong>").append("(" + dat.getUTCDate() + "/" + (dat.getMonth() + 1) + "/" + dat.getFullYear() + ")"));
+        var iconURL = currentIcon + response.weather[0].icon + ".png";
+        imga.attr("src", iconURL);
+        iconDiv.append(imga);
+        colDiv.append(fullDate)
+            .append(iconDiv)
+            .append("<div>" + "<strong>Temperature: </strong>" + response.main.temp + celsiusSymbol + "C </div>")
+            .append("<div>" + "<strong> Humidity: </strong>" + response.main.humidity + "% </div>")
+            .append("<div>" + "<strong> Wind Speed: </strong>" + response.wind.speed + "MPH </div>");
+        if (option == "fiveDays") {
+            row.attr("id", "fiveDays"); 0
+            row.addClass("row");
+            row.append(colDiv);
+            fiveDaysInfo.append(row);
+        } else {
+            var todayRow = $("<div class=\"row\" id=\"todayWeather\"><strong>Today's Weather: <strong></div>"); //creating new row for today weather id tag
+            colDiv.append("<div id=\"uvIndex\">" + "<strong>UV index: </strong>" + "<p id=\"uv\">" + uvIndex + "</p>" + "</div>");
+            todayRow.append(colDiv);
+            todaysWeather.append(todayRow);
+        }
+    }
 
 });
