@@ -20,13 +20,16 @@ $(document).ready(function () {
     form.append(inputCity).append(btnSubmit);
     $(".container .row .col-sm").append(form); // appending from to container
 
-    init();
+    init();// programs starts from here
     function init() {
         getDataFromLocalStorage();
         searchCity();
         historyClick();
     }
 
+    /**
+     * gets the data from localstorage 
+     */
     function getDataFromLocalStorage(args, city) {
         if (args == "searchClick") {
             $("#historyCity").append($("<div class=\"row\"></div>").text(city));
@@ -42,6 +45,9 @@ $(document).ready(function () {
         }
     }
 
+    /**
+     * search weather by city name
+     */
     function searchCity() {
         btnSubmit.click(function (event) {
             event.stopPropagation();
@@ -52,7 +58,7 @@ $(document).ready(function () {
                 forcastWeatherQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&units=metric&appid=" + apiKey;
                 for (var i = 0; i < localStorage.length; i++) {
                     var value = localStorage.getItem(localStorage.key(i));
-                    if (value.toUpperCase() == cityName.toUpperCase()) {
+                    if (value.toUpperCase() == cityName.toUpperCase()) {  // prevents storing duplicates
                         alert("Already present in history just click it to get info");
                         console.log("Already present");
                         checkContain = true;
@@ -61,15 +67,15 @@ $(document).ready(function () {
                 if (!checkContain || localStorage.length === 0) {
                     inputCity.val("");
                     currentCity.text(cityName);
-                    if (Object.keys(localStorage).length === 0) {
+                    if (Object.keys(localStorage).length === 0) { //gets the length of localstorage
                         counter = 0;
                         localStorage.setItem(counter, cityName);
                     } else {
                         counter = Object.keys(localStorage).reduce(function (x, y) {
-                            return Math.max(x, y);
+                            return Math.max(x, y); // gets the high value from array
                         });
                         counter++;
-                        localStorage.setItem(counter, cityName);
+                        localStorage.setItem(counter, cityName); //sets the key and value
                     }
                     getDataFromLocalStorage("searchClick", cityName);
                     forecastAndTodayWeather(forcastWeatherQueryURL);
@@ -79,6 +85,9 @@ $(document).ready(function () {
         });
     }
 
+    /**
+     * responses the click event of history 
+     */
     function historyClick() {
         clickOnhistory.on("click", "div.row", function (event) {
             var getVal = $(event.target).text();
@@ -88,6 +97,10 @@ $(document).ready(function () {
         });
     }
 
+    /**
+     * 
+     * calling api to get uv index by latitude and longitude by name of city 
+     */
     function forecastAndTodayWeather(QueryURL) {
         $.ajax(
             {
@@ -96,7 +109,7 @@ $(document).ready(function () {
                 longitude = response.city.coord.lon;
                 latitude = response.city.coord.lat;
                 var weatherArray = response.list.filter(function (args) {
-                    return args.dt_txt.split(" ")[1] == "12:00:00";
+                    return args.dt_txt.split(" ")[1] == "12:00:00"; //filtering the 12 pm weather data
                 });
                 $.ajax(
                     {
@@ -113,12 +126,15 @@ $(document).ready(function () {
             });
     }
 
+    /**
+     * displays Weather in row column containing date, temp, humidity, wind, uv index and weather icon 
+     */
     function displayWeather(response, option) {
         var iconDiv = $("<div>");
         var colDiv = $("<div>");
         colDiv.addClass("col-xs-2");
         var imga = $("<img id=\"weIcon\">");
-        var dat = new Date(response.dt * 1000);
+        var dat = new Date(response.dt * 1000); // convert the date into readable format
         var fullDate = $("<div>");
         fullDate.append($("<strong>").append("(" + dat.getUTCDate() + "/" + (dat.getMonth() + 1) + "/" + dat.getFullYear() + ")"));
         var iconURL = currentIcon + response.weather[0].icon + ".png";
