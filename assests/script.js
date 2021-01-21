@@ -22,9 +22,20 @@ $(document).ready(function () {
 
     init();// programs starts from here
     function init() {
+        getInitialDisplayFromStorage();
         getDataFromLocalStorage();
         searchCity();
         historyClick();
+    }
+
+    /**
+     * persist the information of weather of key zero on page on reload.
+     */
+    function getInitialDisplayFromStorage(){
+        var intialvalue = localStorage.getItem(localStorage.key(0));
+        currentCity.text(intialvalue);
+        var urlIntial = "https://api.openweathermap.org/data/2.5/forecast?q=" + intialvalue + "&units=metric&appid=" + apiKey;
+        forecastAndTodayWeather(urlIntial);
     }
 
     /**
